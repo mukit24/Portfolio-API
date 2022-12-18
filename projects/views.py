@@ -20,7 +20,7 @@ def getTopProjects(request):
 def projectDetails(request,id):
     try:
         project = Project.objects.get(id=id)
-        serializer = ProjectSerializer(project)
+        serializer = ProjectSerializer(project, many=False)
         print(serializer.data)
         return Response(serializer.data)
     except:
