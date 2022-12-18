@@ -11,7 +11,7 @@ class Tag(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = RichTextUploadingField()
-    cover = models.FileField(upload_to='cover_pic/')
+    cover = models.ImageField()
     tag = models.ManyToManyField(Tag)
     github = models.URLField(max_length=100)
     live_demo = models.URLField(max_length=60, null=True, blank=True)

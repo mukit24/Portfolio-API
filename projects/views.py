@@ -11,6 +11,12 @@ def getAllProjects(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def getTopProjects(request):
+    projects = Project.objects.all().order_by('-priority')[0:6]
+    serializer = ProjectSerializer(projects, many = True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def projectDetails(request,id):
     try:
         project = Project.objects.get(id=id)
