@@ -5,8 +5,12 @@ from .models import Project
 from .serializers import ProjectSerializer
 
 @api_view(['GET'])
-def getAllProjects(request):
-    projects = Project.objects.all().order_by('-priority')
+def getAllProjects(request, tag=None):
+    if tag and tag != 'all':
+        projects = Project.objects.filter(tag__name__contains=tag).order_by('-priority')
+    else:
+        projects = Project.objects.all().order_by('-priority')
+
     serializer = ProjectSerializer(projects, many = True)
     return Response(serializer.data)
 
