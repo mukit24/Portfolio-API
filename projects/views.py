@@ -7,7 +7,8 @@ from .serializers import ProjectSerializer
 @api_view(['GET'])
 def getAllProjects(request, tag=None):
     if tag and tag != 'all':
-        projects = Project.objects.filter(tag__name__contains=tag).order_by('-priority')
+        projects = list(set(Project.objects.filter(tag__name__contains=tag)))
+        print(projects)
     else:
         projects = Project.objects.all().order_by('-priority')
 
@@ -25,7 +26,7 @@ def projectDetails(request,id):
     try:
         project = Project.objects.get(id=id)
         serializer = ProjectSerializer(project, many=False)
-        print(serializer.data)
+        # print(serializer.data)
         return Response(serializer.data)
     except:
         return Response({'error': 'Project Not Found'},status=status.HTTP_400_BAD_REQUEST)
